@@ -1,0 +1,19 @@
+<workflow name="Weekly newsletter (broken, synthetic)">
+  <activity id="start" type="start" label="Start Monday 06:00"/>
+  <activity id="audience" type="query" label="Query newsletter audience"/>
+  <activity id="fork" type="fork" label="Split by market"/>
+  <activity id="hr_send" type="delivery" label="Send HR"/>
+  <activity id="gr_send" type="delivery" label="Send GR"/>
+  <activity id="join" type="join" label="Join"/>
+  <activity id="report" type="script" label="Post stats to channel"/>
+  <activity id="end" type="end" label="End"/>
+  <activity id="old_cleanup" type="script" label="Old cleanup step"/>
+  <transition from="start" to="audience"/>
+  <transition from="audience" to="fork"/>
+  <transition from="fork" to="hr_send"/>
+  <transition from="fork" to="gr_send"/>
+  <transition from="hr_send" to="join"/>
+  <transition from="join" to="report"/>
+  <transition from="report" to="end"/>
+  <transition from="old_cleanup" to="end"/>
+</workflow>

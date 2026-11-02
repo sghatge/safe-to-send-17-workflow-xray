@@ -1,0 +1,24 @@
+<workflow name="Weekly newsletter (fixed, synthetic)">
+  <activity id="start" type="start" label="Start Monday 06:00"/>
+  <activity id="audience" type="query" label="Query newsletter audience" filter="newsletter_optin = 1" limit="500000"/>
+  <activity id="fork" type="fork" label="Split by market"/>
+  <activity id="hr_send" type="delivery" label="Send HR"/>
+  <activity id="gr_send" type="delivery" label="Send GR"/>
+  <activity id="join" type="join" label="Join"/>
+  <activity id="report" type="script" label="Post stats to channel"/>
+  <activity id="alert" type="alert" label="Alert CRM on-call"/>
+  <activity id="end" type="end" label="End"/>
+  <transition from="start" to="audience"/>
+  <transition from="audience" to="fork"/>
+  <transition from="audience" to="alert" kind="error"/>
+  <transition from="fork" to="hr_send"/>
+  <transition from="fork" to="gr_send"/>
+  <transition from="hr_send" to="join"/>
+  <transition from="hr_send" to="alert" kind="error"/>
+  <transition from="gr_send" to="join"/>
+  <transition from="gr_send" to="alert" kind="error"/>
+  <transition from="join" to="report"/>
+  <transition from="report" to="end"/>
+  <transition from="report" to="alert" kind="error"/>
+  <transition from="alert" to="end"/>
+</workflow>
